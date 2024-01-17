@@ -3,15 +3,15 @@
 //se for maior ou igual a 5 imprima aluno em recuperação e se for menor que 5 aluno reprovado.
 
 
- const readline = require('readline-sync');
- 
+const readline = require('readline-sync');
+
 // let soma_notas = 0;
 // let mediaNotas = 0; 
 // for (i = 1; i <=4; i++) {
 //     const nota = readline.questionFloat("Informe uma nota: "); // questionFloat para numero 1.5 
 //     soma_notas += nota;
-    
-     
+
+
 // }
 // mediaNotas = soma_notas / 4;
 
@@ -31,19 +31,54 @@
 
 //peça um saldo inicial 
 
-
-
 //atraves de um loop pedir a operacao (deposito, saque ou saldo)
-do{let saldoinicial = readline.questionFloat("Informe seu saldo?");
-    deposito = readline.questionFloat("Deseja realizar um deposito?");
-    saque = readline.questionFloat("Deseja realizar um saque?") ;
-    if(novosaldo = saldoinicial - saque <= 0){
-        console.log("Seu saldo esta abaixo de zero");
-    }else {
-        novosaldo = saldoinicial+deposito;
-        console.log(novosaldo);
-    }
-}while(novosaldo)
-//caso seja deposito ou saque o progrma deve incrementar ou decrementar 
-//a ultima deve validar se o saldo do saque nao ficara negativo 
+// do {
+//     saldoinicial = readline.questionFloat("Informe seu saldo?");
+//     deposito = readline.questionFloat("Deseja realizar um deposito?");
+//     saque = readline.questionFloat("Deseja realizar um saque?");
+//     novosaldo = saldoinicial+deposito-saque;
+//     if(novosaldo <= 0 ){
+//         console.log("Seu saldo esta abaixo de zero");
+//     }else{
+//         console.log(novosaldo);
+//     }
+//     break;
+// } while (novosaldo <= 0)
+//caso seja deposito ou saque o progrma deve incrementar ou decrementar
+//a ultima deve validar se o saldo do saque nao ficara negativo
 // programa sera encerrado quando informada a operacao sair
+
+
+let saldo = readline.questionFloat("Informe o saldo inicial: ");
+
+let operacao;
+
+do {
+  operacao = readline
+    .question("Informe a operação (Deposito, Saque, Saldo ou Sair)")
+    .toLowerCase();
+  if (operacao === "deposito" || operacao === "saque") {
+    const valorOperacao = readline.questionFloat("Informe o valor da operação: ")
+
+    if (valorOperacao <= 0) {
+      console.log("Valor inválido");
+      continue;
+    }
+
+    if (operacao === "deposito") {
+      saldo += valorOperacao;
+    } else if (operacao === "saque") {
+      if (valorOperacao > saldo) {
+        console.log("Operação inválida - Saldo insuficiente");
+        continue;
+      }
+      saldo -= valorOperacao;
+    }
+  } else if (operacao === "saldo") {
+    console.log(`Saldo atual: R$ ${saldo.toFixed(2)}`);
+  } else if (operacao === "sair") {
+    continue;
+  } else {
+    console.log("Operação inválida")
+  }
+} while (operacao !== "sair")
